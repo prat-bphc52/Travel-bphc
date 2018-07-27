@@ -1,20 +1,20 @@
 package com.crux.pratd.travelbphc;
 
-import android.net.Uri;
-import android.support.v4.app.Fragment;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -24,13 +24,14 @@ import com.facebook.ProfileTracker;
 import com.facebook.login.LoginManager;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+
 import java.util.Calendar;
 
 public class plannerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    Calendar myCalendar;
     private Profile fbProfile;
     private ProfileTracker mProfileTracker;
-    Calendar myCalendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +103,7 @@ public class plannerActivity extends AppCompatActivity
         TextView uName=hView.findViewById(R.id.userName);
         ImageView iv=hView.findViewById(R.id.userDP);
         final ProgressBar profileLoad=hView.findViewById(R.id.progressBar2);
-        Picasso.with(getApplicationContext()).load(fbProfile.getProfilePictureUri(100,100)).into(iv, new Callback() {
+        Picasso.with(getApplicationContext()).load(LoginActivity.user.getPhotoUrl()).into(iv, new Callback() {
             @Override
             public void onSuccess() {
                 profileLoad.setVisibility(View.GONE);

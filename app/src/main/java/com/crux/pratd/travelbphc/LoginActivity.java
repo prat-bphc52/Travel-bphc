@@ -22,6 +22,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 
@@ -58,7 +59,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             GoogleApiAvailability.getInstance().makeGooglePlayServicesAvailable(this);
         } else {
 
-            if (user == null) {
+            if (user == null || user.getPhoneNumber() == null) {
                 try {
                     assert getSupportActionBar() != null;
                     getSupportActionBar().hide();
@@ -119,7 +120,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         startActivityForResult(signInIntent, 0);
     }
 
-    private void firebaseAuthWithGoogle(@NonNull GoogleSignInAccount acct) {
+    private void firebaseAuthWithGoogle(@NonNull final GoogleSignInAccount acct) {
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         firebaseAuth.signInWithCredential(credential)
@@ -129,11 +130,25 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             user = firebaseAuth.getCurrentUser();
+                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                    .setDisplayName(acct.getDisplayName())
+                                    .setPhotoUri(acct.getPhotoUrl())
+                                    .build();
 
-                            //Update UI
-                            Intent intent = new Intent(LoginActivity.this, plannerActivity.class);
-                            startActivity(intent);
-                            finish();
+                            user.updateProfile(profileUpdates)
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                Intent intent = new Intent(LoginActivity.this, PhoneVerification.class);
+                                                startActivity(intent);
+                                                finish();
+                                            } else {
+                                                Toast.makeText(LoginActivity.this, "Error creating profile", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
+
 
                         } else {
                             // If sign in fails, display a message to the user.
