@@ -129,26 +129,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            user = firebaseAuth.getCurrentUser();
-                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                                    .setDisplayName(acct.getDisplayName())
-                                    .setPhotoUri(acct.getPhotoUrl())
-                                    .build();
-
-                            user.updateProfile(profileUpdates)
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if (task.isSuccessful()) {
-                                                Intent intent = new Intent(LoginActivity.this, PhoneVerification.class);
-                                                startActivity(intent);
-                                                finish();
-                                            } else {
-                                                Toast.makeText(LoginActivity.this, "Error creating profile", Toast.LENGTH_SHORT).show();
-                                            }
-                                        }
-                                    });
-
+                            updateUserAccountDetails(acct);
 
                         } else {
                             // If sign in fails, display a message to the user.
@@ -167,5 +148,27 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
             // ...
         }
+    }
+
+    private void updateUserAccountDetails(GoogleSignInAccount account) {
+        user = firebaseAuth.getCurrentUser();
+        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                .setDisplayName(account.getDisplayName())
+                .setPhotoUri(account.getPhotoUrl())
+                .build();
+
+        user.updateProfile(profileUpdates)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Intent intent = new Intent(LoginActivity.this, PhoneVerification.class);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            Toast.makeText(LoginActivity.this, "Error creating profile", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 }

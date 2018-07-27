@@ -11,11 +11,16 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.firestore.SetOptions;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import static java.lang.Boolean.FALSE;
@@ -68,9 +73,7 @@ public class PhoneVerification extends AppCompatActivity implements View.OnClick
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            Intent intent = new Intent(PhoneVerification.this, plannerActivity.class);
-                            startActivity(intent);
-                            finish();
+                            addUserDetailsToDatabase();
                         } else {
                             Toast.makeText(PhoneVerification.this, "Error, Please try again", Toast.LENGTH_SHORT).show();
                         }
@@ -115,5 +118,31 @@ public class PhoneVerification extends AppCompatActivity implements View.OnClick
                     PhoneVerification.this,               // Activity (for callback binding)
                     mCallbacks);        // OnVerificationStateChangedCallbacks
         }
+    }
+
+    private void addUserDetailsToDatabase() {
+        Map<String, Object> map = new HashMap<>(3);
+        map.put("Number", LoginActivity.user.getPhoneNumber());
+        map.put("Name", LoginActivity.user.getDisplayName());
+        map.put("Photo", LoginActivity.user.getPhotoUrl());
+        LoginActivity.db
+                .get()
+                .collection("Users")
+                .document(LoginActivity.user.getUid())
+                .set(map, SetOptions.merge())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Intent intent = new Intent(PhoneVerification.this, plannerActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(PhoneVerification.this, "Error adding phone number", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }

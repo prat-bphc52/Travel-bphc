@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.facebook.Profile;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
@@ -31,6 +30,7 @@ public class MyPlans extends Fragment {
     private PlanAdapter adapter;
     private List<TravelPlan> plan_list = new ArrayList<>();
     private RecyclerView recyclerView;
+
     public MyPlans() {
     }
 
@@ -38,41 +38,41 @@ public class MyPlans extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view= inflater.inflate(R.layout.fragment_myplans,container,false);
-        mRef= FirebaseDatabase.getInstance().getReference();
+        View view = inflater.inflate(R.layout.fragment_myplans, container, false);
+        mRef = FirebaseDatabase.getInstance().getReference();
 
         view.findViewById(R.id.fab).setVisibility(View.GONE);
 
-        recyclerView=view.findViewById(R.id.rec_view);
+        recyclerView = view.findViewById(R.id.rec_view);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
-        adapter = new PlanAdapter(plan_list);
-        final TextView recycler_status=view.findViewById(R.id.status);
-        final ProgressBar progress=view.findViewById(R.id.recycler_progress);
+        adapter = new PlanAdapter(plan_list, getActivity());
+        final TextView recycler_status = view.findViewById(R.id.status);
+        final ProgressBar progress = view.findViewById(R.id.recycler_progress);
 
         FirebaseFirestore.getInstance().collection("plans")
-                .whereEqualTo("travellers."+Profile.getCurrentProfile().getId(), true)
+                .whereEqualTo("travellers." + LoginActivity.user.getUid(), true)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if(task.getResult().getDocuments().size()!=0) {
+                        if (task.getResult().getDocuments().size() != 0) {
                             for (DocumentSnapshot doc : task.getResult().getDocuments()) {
-                                TravelPlan p=doc.toObject(TravelPlan.class);
+                                TravelPlan p = doc.toObject(TravelPlan.class);
                                 plan_list.add(p);
                             }
                             progress.setVisibility(View.GONE);
                             recycler_status.setVisibility(View.INVISIBLE);
-                            adapter=new PlanAdapter(plan_list);
+                            adapter = new PlanAdapter(plan_list, getActivity());
                             recyclerView.setAdapter(adapter);
                             adapter.notifyDataSetChanged();
-                        }
-                        else {
+                        } else {
                             progress.setVisibility(View.GONE);
                             recycler_status.setVisibility(View.VISIBLE);
                             recycler_status.setText("You haven't joined or created any plan...");

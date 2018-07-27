@@ -5,8 +5,8 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -38,26 +38,27 @@ import java.util.List;
 public class Search extends Fragment {
     FirebaseDatabase mDatabase;
     DatabaseReference mRef;
-    private PlanAdapter adapter;
-    private int y,m,d,h,s;
-    private List<TravelPlan> plan_list = new ArrayList<>();
-    private List<TravelPlan> plan_list_filtered=new ArrayList<>();
-    private RecyclerView recyclerView;
     Calendar myCalendar;
-    TextView fil_date,fil_time,status;
+    TextView fil_date, fil_time, status;
+    private PlanAdapter adapter;
+    private int y, m, d, h, s;
+    private List<TravelPlan> plan_list = new ArrayList<>();
+    private List<TravelPlan> plan_list_filtered = new ArrayList<>();
+    private RecyclerView recyclerView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        myCalendar=Calendar.getInstance();
+        myCalendar = Calendar.getInstance();
         setHasOptionsMenu(true);
     }
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View view=inflater.inflate(R.layout.fragment_search,container,false);
-        mDatabase= FirebaseDatabase.getInstance();
-        mRef=mDatabase.getReference();
+        final View view = inflater.inflate(R.layout.fragment_search, container, false);
+        mDatabase = FirebaseDatabase.getInstance();
+        mRef = mDatabase.getReference();
 
         //TODO remove the next two lines after creating new activity layout
         FloatingActionButton fab = view.findViewById(R.id.fab);
@@ -82,30 +83,29 @@ public class Search extends Fragment {
                 });*/
             }
         });
-        y=m=d=h=s=-1;
-        recyclerView=view.findViewById(R.id.rec_view);
+        y = m = d = h = s = -1;
+        recyclerView = view.findViewById(R.id.rec_view);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
-        final TextView recycler_status=view.findViewById(R.id.status);
-        final ProgressBar progress=view.findViewById(R.id.recycler_progress);
+        final TextView recycler_status = view.findViewById(R.id.status);
+        final ProgressBar progress = view.findViewById(R.id.recycler_progress);
         FirebaseFirestore.getInstance().collection("plans")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         plan_list.clear();
-                        if(task.getResult().getDocuments().size()!=0) {
+                        if (task.getResult().getDocuments().size() != 0) {
                             for (DocumentSnapshot doc : task.getResult().getDocuments()) {
-                                TravelPlan p=doc.toObject(TravelPlan.class);
-                                if(!p.getSpace().equals("0"))
+                                TravelPlan p = doc.toObject(TravelPlan.class);
+                                if (!p.getSpace().equals("0"))
                                     plan_list.add(p);
                             }
                             progress.setVisibility(View.GONE);
                             recycler_status.setVisibility(View.INVISIBLE);
-                        }
-                        else {
+                        } else {
                             progress.setVisibility(View.GONE);
                             recycler_status.setVisibility(View.VISIBLE);
                             recycler_status.setText("You haven't joined or created any plan...");
@@ -114,40 +114,42 @@ public class Search extends Fragment {
                     }
                 });
 
-        fil_date=view.findViewById(R.id.date);
-        fil_time=view.findViewById(R.id.time);
-        status=view.findViewById(R.id.textView);
-        final DatePickerDialog.OnDateSetListener dplistener=new DatePickerDialog.OnDateSetListener() {
+        fil_date = view.findViewById(R.id.date);
+        fil_time = view.findViewById(R.id.time);
+        status = view.findViewById(R.id.textView);
+        final DatePickerDialog.OnDateSetListener dplistener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                fil_date.setText(i2+"/"+(i1+1)+"/"+i);
-                y=i;
-                m=i1;
-                d=i2;
+                fil_date.setText(i2 + "/" + (i1 + 1) + "/" + i);
+                y = i;
+                m = i1;
+                d = i2;
             }
         };
         fil_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DatePickerDialog dp=new DatePickerDialog(getActivity(),dplistener,myCalendar.get(Calendar.YEAR),myCalendar.get(Calendar.MONTH),myCalendar.get(Calendar.DAY_OF_MONTH));
-                dp.create();
-                dp.show();
+                if (getActivity() != null) {
+                    DatePickerDialog dp = new DatePickerDialog(getActivity(), dplistener, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH));
+                    dp.create();
+                    dp.show();
+                }
             }
         });
 
-        final TimePickerDialog.OnTimeSetListener tplistener= new TimePickerDialog.OnTimeSetListener() {
+        final TimePickerDialog.OnTimeSetListener tplistener = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int i, int i1) {
                 //fil_time.setText((i<10?"0"+i:(i>12?i-12:i))+":"+(i1<10?"0"+i1:i1)+(i>=12?" PM":" AM"));
-                h=i;
-                s=i1;
-                fil_time.setText((i<10?"0"+i:i)+":"+(i1<10?"0"+i1:i1));
+                h = i;
+                s = i1;
+                fil_time.setText((i < 10 ? "0" + i : i) + ":" + (i1 < 10 ? "0" + i1 : i1));
             }
         };
         fil_time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TimePickerDialog tpd=new TimePickerDialog(getActivity(),tplistener,12,0,false);
+                TimePickerDialog tpd = new TimePickerDialog(getActivity(), tplistener, 12, 0, false);
                 tpd.create();
                 tpd.show();
             }
@@ -155,16 +157,13 @@ public class Search extends Fragment {
         view.findViewById(R.id.findPlans).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(h==-1) {
+                if (h == -1) {
                     Toast.makeText(getActivity(), "You haven't set the date", Toast.LENGTH_SHORT).show();
                     //y = m = d = h = s = -1;
-                }
-                else if(d==-1)
-                {
-                    Toast.makeText(getActivity(),"You haven't set the time",Toast.LENGTH_SHORT).show();
+                } else if (d == -1) {
+                    Toast.makeText(getActivity(), "You haven't set the time", Toast.LENGTH_SHORT).show();
                     //y = m = d = h = s = -1;
-                }
-                else {
+                } else {
                     status.setText("SEARCH RESULTS");
                     applyFilter();
                 }
@@ -172,14 +171,16 @@ public class Search extends Fragment {
         });
         return view;
     }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.planner, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
+
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.filter) {
-            if(y!=-1) {
+            if (y != -1) {
                 fil_date.setText("");
                 fil_time.setText("");
                 status.setText("RECENT");
@@ -189,29 +190,28 @@ public class Search extends Fragment {
         }
         return super.onOptionsItemSelected(item);
     }
-    public void applyFilter()
-    {
+
+    public void applyFilter() {
         plan_list_filtered.clear();
-        if(d!=-1) {
-            Calendar filter=Calendar.getInstance();
-            Calendar plan=Calendar.getInstance();
-            filter.set(y,m,d,h,s);
+        if (d != -1) {
+            Calendar filter = Calendar.getInstance();
+            Calendar plan = Calendar.getInstance();
+            filter.set(y, m, d, h, s);
             for (TravelPlan p : plan_list) {
-                int y1=Integer.parseInt(p.getDate().substring(p.getDate().lastIndexOf('.')+1));
-                int m1=Integer.parseInt(p.getDate().substring(p.getDate().indexOf('.')+1,p.getDate().lastIndexOf('.')))-1;
-                int d1=Integer.parseInt(p.getDate().substring(0,p.getDate().indexOf('.')));
-                int h1=Integer.parseInt(p.getTime().substring(0,2));
-                int s1=Integer.parseInt(p.getTime().substring(3,5));
-                plan.set(y1,m1,d1,h1,s1);
-                if(Math.abs(filter.getTimeInMillis()-plan.getTimeInMillis())<3600000)
+                int y1 = Integer.parseInt(p.getDate().substring(p.getDate().lastIndexOf('.') + 1));
+                int m1 = Integer.parseInt(p.getDate().substring(p.getDate().indexOf('.') + 1, p.getDate().lastIndexOf('.'))) - 1;
+                int d1 = Integer.parseInt(p.getDate().substring(0, p.getDate().indexOf('.')));
+                int h1 = Integer.parseInt(p.getTime().substring(0, 2));
+                int s1 = Integer.parseInt(p.getTime().substring(3, 5));
+                plan.set(y1, m1, d1, h1, s1);
+                if (Math.abs(filter.getTimeInMillis() - plan.getTimeInMillis()) < 3600000)
                     plan_list_filtered.add(p);
             }
+        } else {
+            plan_list_filtered = new ArrayList<>(plan_list);
+            Log.d("Refreshing Recyler", "" + plan_list.size() + "," + plan_list_filtered.size());
         }
-        else {
-            plan_list_filtered=new ArrayList<>(plan_list);
-            Log.d("Refreshing Recyler",""+plan_list.size()+","+plan_list_filtered.size());
-        }
-        adapter=new PlanAdapter(plan_list_filtered);
+        adapter = new PlanAdapter(plan_list_filtered, getActivity());
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
