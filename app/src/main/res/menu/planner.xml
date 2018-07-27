@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/filter"
-        android:icon="@drawable/ic_filter_list_white_24px"
+        android:icon="@android:drawable/ic_menu_close_clear_cancel"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="CLear Filter"
         app:showAsAction="always" />
 </menu>

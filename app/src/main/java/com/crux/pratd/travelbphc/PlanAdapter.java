@@ -141,11 +141,23 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.MyViewHolder> 
                             call.enqueue(new Callback<JsonObject>() {
                                 @Override
                                 public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                                    Log.d("Response",response.toString());
+                                    if(response.body()==null || !response.body().has("status")){
+                                        Toast.makeText(getApplicationContext(),"Unable to process your request, try again later",Toast.LENGTH_SHORT).show();
+                                        return;
+                                    }
+                                    Log.d("Response",response.body().toString());
+                                    int status=Integer.parseInt(response.body().get("status").toString());
+                                    if(status==1)
+                                        Toast.makeText(getApplicationContext(),"Plan left successfully",Toast.LENGTH_SHORT).show();
+                                    else if(status==0)
+                                        Toast.makeText(getApplicationContext(),"Request already sent",Toast.LENGTH_SHORT).show();
+                                    else
+                                        Toast.makeText(getApplicationContext(),"Unable to process your request, try again later",Toast.LENGTH_SHORT).show();
                                 }
                                 @Override
                                 public void onFailure(Call<JsonObject> call, Throwable t) {
                                     Log.d("Response","Error");
+                                    Toast.makeText(getApplicationContext(),"Check your internet connection",Toast.LENGTH_SHORT).show();
                                 }
                             });
                         }
@@ -157,7 +169,6 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.MyViewHolder> 
                     builder.setPositiveButton("Join", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            mRef.child("requests").child(creatorId).child(Profile.getCurrentProfile().getId()).setValue("I would like to join your plan");
                             JsonObject json=new JsonObject();
                             json.addProperty("sender",Profile.getCurrentProfile().getId());
                             json.addProperty("receiver",creatorId);
@@ -166,23 +177,28 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.MyViewHolder> 
                             call.enqueue(new Callback<JsonObject>() {
                                 @Override
                                 public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                                    Log.d("Response",response.toString());
+                                    if(response.body()==null || !response.body().has("status")){
+                                        Toast.makeText(getApplicationContext(),"Unable to process your request, try again later",Toast.LENGTH_SHORT).show();
+                                        return;
+                                    }
+                                    Log.d("Response",response.body().toString());
+                                    int status=Integer.parseInt(response.body().get("status").toString());
+                                    if(status==1)
+                                        Toast.makeText(getApplicationContext(),"Join request sent",Toast.LENGTH_SHORT).show();
+                                    else if(status==0)
+                                        Toast.makeText(getApplicationContext(),"Request already sent",Toast.LENGTH_SHORT).show();
+                                    else
+                                        Toast.makeText(getApplicationContext(),"Unable to process your request, try again later",Toast.LENGTH_SHORT).show();
                                 }
                                 @Override
                                 public void onFailure(Call<JsonObject> call, Throwable t) {
-                                    Log.d("Response","Unable to process your request");
+                                    Toast.makeText(getApplicationContext(),"Check your internet connection",Toast.LENGTH_SHORT).show();
                                 }
                             });
-                            Toast.makeText(getApplicationContext(),"A request has been sent to the creator, you will be notified when your request is accepted.",Toast.LENGTH_LONG).show();
                         }
                     });
                 }
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                    }
-                });
+                builder.setNegativeButton("Cancel", null);
                 builder.create().show();
             }
         });

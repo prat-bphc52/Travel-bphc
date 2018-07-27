@@ -1,13 +1,30 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/disp_req"
+<FrameLayout 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EFEFEF"
-    android:orientation="vertical"
-    android:paddingTop="10dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.crux.pratd.travelbphc.Requests">
-
-    <!-- TODO: Update blank fragment layout -->
-
-</LinearLayout>
+    
+    <LinearLayout 
+        android:id="@+id/disp_req"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#EFEFEF"
+        android:orientation="vertical"
+        android:paddingTop="10dp"/>
+    <FrameLayout
+        android:id="@+id/overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+        android:visibility="gone"
+        android:clickable="true"
+        android:focusable="true"
+        android:alpha="0.6"
+        android:background="@android:color/darker_gray">
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+    </FrameLayout>
+</FrameLayout>

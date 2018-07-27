@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
@@ -19,11 +20,8 @@ import com.facebook.HttpMethod;
 import com.facebook.Profile;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -32,6 +30,8 @@ import com.google.gson.JsonObject;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class Requests extends Fragment {
     DatabaseReference mRef;
@@ -53,6 +53,8 @@ public class Requests extends Fragment {
         mRef=FirebaseDatabase.getInstance().getReference();
 
         final LinearLayout linearLayout=view.findViewById(R.id.disp_req);
+        final View progress=view.findViewById(R.id.overlay);
+
         final TextView msg=new TextView(getActivity());
         msg.setTextSize(20);
         msg.setTextColor(Color.BLACK);
@@ -93,6 +95,7 @@ public class Requests extends Fragment {
                                 child.findViewById(R.id.accept).setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
+                                        progress.setVisibility(View.VISIBLE);
                                         JsonObject json=new JsonObject();
                                         json.addProperty("sender",Profile.getCurrentProfile().getId());
                                         json.addProperty("receiver",key);
@@ -102,19 +105,33 @@ public class Requests extends Fragment {
                                         call.enqueue(new Callback<JsonObject>() {
                                             @Override
                                             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                                                Log.d("Response",response.toString());
+                                                progress.setVisibility(View.GONE);
+                                                if(response.body()==null || !response.body().has("status")){
+                                                    Toast.makeText(getApplicationContext(),"Unable to process your request, try again later",Toast.LENGTH_SHORT).show();
+                                                    return;
+                                                }
+                                                Log.d("Response",response.body().toString());
+                                                int status=Integer.parseInt(response.body().get("status").toString());
+                                                if(status==1) {
+                                                    linearLayout.removeView(child);
+                                                    Toast.makeText(getApplicationContext(), "Request approved", Toast.LENGTH_SHORT).show();
+                                                }
+                                                else
+                                                    Toast.makeText(getApplicationContext(),"Unable to process your request, try again later",Toast.LENGTH_SHORT).show();
                                             }
                                             @Override
                                             public void onFailure(Call<JsonObject> call, Throwable t) {
                                                 Log.d("Response","Error");
+                                                progress.setVisibility(View.GONE);
+                                                Toast.makeText(getContext(),"Unknown error occurred, try again later",Toast.LENGTH_SHORT).show();
                                             }
                                         });
-                                        linearLayout.removeView(child);
                                     }
                                 });
                                 child.findViewById(R.id.reject).setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
+                                        progress.setVisibility(View.VISIBLE);
                                         JsonObject json=new JsonObject();
                                         json.addProperty("sender",Profile.getCurrentProfile().getId());
                                         json.addProperty("receiver",key);
@@ -124,14 +141,27 @@ public class Requests extends Fragment {
                                         call.enqueue(new Callback<JsonObject>() {
                                             @Override
                                             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                                                Log.d("Response",response.toString());
+                                                progress.setVisibility(View.GONE);
+                                                if(response.body()==null || !response.body().has("status")){
+                                                    Toast.makeText(getApplicationContext(),"Unable to process your request, try again later",Toast.LENGTH_SHORT).show();
+                                                    return;
+                                                }
+                                                Log.d("Response",response.body().toString());
+                                                int status=Integer.parseInt(response.body().get("status").toString());
+                                                if(status==1) {
+                                                    linearLayout.removeView(child);
+                                                    Toast.makeText(getApplicationContext(), "Request rejected", Toast.LENGTH_SHORT).show();
+                                                }
+                                                else
+                                                    Toast.makeText(getApplicationContext(),"Unable to process your request, try again later",Toast.LENGTH_SHORT).show();
                                             }
                                             @Override
                                             public void onFailure(Call<JsonObject> call, Throwable t) {
                                                 Log.d("Response","Error");
+                                                progress.setVisibility(View.GONE);
+                                                Toast.makeText(getContext(),"Check your internet connection",Toast.LENGTH_SHORT).show();
                                             }
                                         });
-                                        linearLayout.removeView(child);
                                     }
                                 });
                                 linearLayout.addView(child);
