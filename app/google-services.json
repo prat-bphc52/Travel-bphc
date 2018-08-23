@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "288819642768-cf8034pheahdq1edmt21vhvmrh7hide9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.crux.pratd.travelbphc",
+            "certificate_hash": "2e6613bf2e67b931d985fbd2d80b3e56add494f8"
+          }
+        },
+        {
           "client_id": "288819642768-m6r1dvm2h1burp583co5gpcse307cbq6.apps.googleusercontent.com",
           "client_type": 3
         }

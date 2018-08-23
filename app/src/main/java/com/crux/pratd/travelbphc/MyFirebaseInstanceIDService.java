@@ -3,7 +3,6 @@ package com.crux.pratd.travelbphc;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.facebook.Profile;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -23,24 +22,25 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
         Log.d("Service", "Refreshed token: " + token);
         sendRegistrationToServer();
     }
-    public void sendRegistrationToServer(){
-        if(token==null)
+
+    public void sendRegistrationToServer() {
+        if (token == null)
             return;
-        if(Profile.getCurrentProfile()==null)
+        if (LoginActivity.user == null)
             return;
-        Map<String,String> map=new HashMap<>();
-        map.put("token",token);
-        FirebaseFirestore.getInstance().collection("user").document(Profile.getCurrentProfile().getId()).set(map)
+        Map<String, String> map = new HashMap<>();
+        map.put("token", token);
+        FirebaseFirestore.getInstance().collection("user").document(LoginActivity.user.getUid()).set(map)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d("Token Service","Updated Successfully");
+                        Log.d("Token Service", "Updated Successfully");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.d("Token Service","Updated Failed");
+                        Log.d("Token Service", "Updated Failed");
                     }
                 });
     }

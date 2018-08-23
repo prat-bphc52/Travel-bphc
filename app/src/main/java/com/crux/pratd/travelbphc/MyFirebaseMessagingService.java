@@ -29,8 +29,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
             Log.d("Notification Service", "Message Notification Body: " + remoteMessage.getNotification().getBody());
-            String CHANNEL_ID="My_channel",CHANNEL_NAME="Channel1";
-            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this,CHANNEL_ID)
+            String CHANNEL_ID = "My_channel", CHANNEL_NAME = "Channel1";
+            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
                     .setSmallIcon(R.mipmap.ic_launcher)
                     .setContentTitle("Travel@Bphc")
                     .setColor(getResources().getColor(R.color.colorAccent))
@@ -47,11 +47,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
                         .setUsage(AudioAttributes.USAGE_NOTIFICATION_RINGTONE)
                         .build();
-                notificationChannel.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION),audioAttributes);
+                notificationChannel.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), audioAttributes);
                 notificationChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
                 mNotificationManager.createNotificationChannel(notificationChannel);
-            }
-            else    mBuilder.setDefaults(Notification.DEFAULT_SOUND);
+            } else mBuilder.setDefaults(Notification.DEFAULT_SOUND);
             mNotificationManager.notify(1, mBuilder.build());
         }
 
