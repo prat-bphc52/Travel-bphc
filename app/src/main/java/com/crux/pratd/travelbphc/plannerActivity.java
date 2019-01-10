@@ -127,7 +127,7 @@ public class plannerActivity extends AppCompatActivity
             //Sign out of google account
             GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                     .setHostedDomain(getString(R.string.domain))
-                    .requestIdToken(getString(R.string.Web_Client_Api_Key))
+                    .requestIdToken(getString(R.string.oauth_client))
                     .requestEmail()
                     .requestProfile()
                     .build();
@@ -136,6 +136,7 @@ public class plannerActivity extends AppCompatActivity
 
             //Show login screen
             Intent intent = new Intent(plannerActivity.this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             finish();
             return true;

@@ -9,6 +9,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="domain">hyderabad.bits-pilani.ac.in</string>
+    <string name="oauth_client">288819642768-m6r1dvm2h1burp583co5gpcse307cbq6.apps.googleusercontent.com</string>
     <string-array name="space_for">
         <item>1</item>
         <item>2</item>

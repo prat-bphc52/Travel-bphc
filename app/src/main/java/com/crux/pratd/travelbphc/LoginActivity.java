@@ -111,7 +111,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void signIn() {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .setHostedDomain(getString(R.string.domain))
-                .requestIdToken(getString(R.string.Web_Client_Api_Key))
+                .requestIdToken(getString(R.string.oauth_client))
                 .requestEmail()
                 .requestProfile()
                 .build();
@@ -146,7 +146,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.sign_in_button:
                 signIn();
                 break;
-            // ...
         }
     }
 
@@ -162,9 +161,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            Intent intent = new Intent(LoginActivity.this, PhoneVerification.class);
+                            Intent intent;
+
+                            if(user.getPhoneNumber()==null) intent = new Intent(LoginActivity.this, PhoneVerification.class);
+                            else intent = new Intent(LoginActivity.this, plannerActivity.class);
+
                             startActivity(intent);
                             finish();
+
                         } else {
                             Toast.makeText(LoginActivity.this, "Error creating profile", Toast.LENGTH_SHORT).show();
                         }

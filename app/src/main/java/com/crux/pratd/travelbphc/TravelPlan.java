@@ -10,10 +10,9 @@ public class TravelPlan {
     private Map<String, Object> travellers;
     private String source, dest, date, time, creator, space;
 
-    public TravelPlan() {
-    }
+    public TravelPlan(){ }
 
-    TravelPlan(String source, String dest, String date, String time, String creator, String space, Map<String, Object> travellers) {
+    public TravelPlan(String source, String dest, String date, String time, String creator, String space, Map<String, Object> travellers) {
         this.source = source;
         this.dest = dest;
         this.date = date;
@@ -23,7 +22,7 @@ public class TravelPlan {
         this.travellers = travellers;
     }
 
-    String getSource() {
+    public String getSource() {
         return source;
     }
 
@@ -31,7 +30,7 @@ public class TravelPlan {
         this.source = source;
     }
 
-    String getDate() {
+    public String getDate() {
         return date;
     }
 
@@ -39,7 +38,7 @@ public class TravelPlan {
         this.date = date;
     }
 
-    String getDest() {
+    public String getDest() {
         return dest;
     }
 
@@ -55,7 +54,7 @@ public class TravelPlan {
         this.time = time;
     }
 
-    String getCreator() {
+    public String getCreator() {
         return creator;
     }
 
@@ -63,19 +62,19 @@ public class TravelPlan {
         this.creator = creator;
     }
 
-    String getSpace() {
-        return space;
-    }
-
-    public void setSpace(String space) {
-        this.space = space;
-    }
-
-    Map<String, Object> getTravellers() {
+    public Map<String, Object> getTravellers() {
         return travellers;
     }
 
     public void setTravellers(Map<String, Object> travellers) {
         this.travellers = travellers;
+    }
+
+    public String getSpace() {
+        return space;
+    }
+
+    public void setSpace(String space) {
+        this.space = space;
     }
 }

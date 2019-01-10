@@ -98,8 +98,10 @@ public class Search extends Fragment {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         plan_list.clear();
                         if (task.getResult().getDocuments().size() != 0) {
+
                             for (DocumentSnapshot doc : task.getResult().getDocuments()) {
                                 TravelPlan p = doc.toObject(TravelPlan.class);
+                                Log.d("Search",doc.getData().toString()+p.getTime());
                                 if (!p.getSpace().equals("0"))
                                     plan_list.add(p);
                             }
