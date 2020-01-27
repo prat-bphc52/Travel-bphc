@@ -57,16 +57,19 @@ public class Requests extends Fragment {
         msg.setGravity(Gravity.CENTER);
         msg.setText("No requests to show");
         msg.setGravity(Gravity.CENTER);
+        Log.d("Requests","fetching requests for "+ LoginActivity.user.getUid());
         FirebaseFirestore.getInstance().collection("requests")
                 .whereEqualTo("receiver_id", LoginActivity.user.getUid())
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        Log.d("Requests","Callback"+task.getResult().getDocuments().size());
                         if (task.getResult().getDocuments().size() != 0) {
                             linearLayout.removeAllViews();
                             for (DocumentSnapshot doc : task.getResult().getDocuments()) {
                                 final String key = doc.getString("sender_id");
+                                Log.d("Requests",key);
                                 final View child = inflater.inflate(R.layout.individual_req, linearLayout, false);
                                 final TextView tv = child.findViewById(R.id.req_message);
                                 tv.setTextSize(16);

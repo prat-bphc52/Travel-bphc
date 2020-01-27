@@ -42,6 +42,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         //Initialize firebase and corresponding requirements
         FirebaseApp.initializeApp(this);
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -52,14 +53,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         //Check for firebase Sign-In
         user = firebaseAuth.getCurrentUser();
-        //account = GoogleSignIn.getLastSignedInAccount(this);
-
 
         if (!(GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this) == ConnectionResult.SUCCESS)) {
             GoogleApiAvailability.getInstance().makeGooglePlayServicesAvailable(this);
         } else {
 
-            if (user == null || user.getPhoneNumber() == null) {
+            if (user == null) {
                 try {
                     assert getSupportActionBar() != null;
                     getSupportActionBar().hide();
@@ -134,7 +133,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         } else {
                             // If sign in fails, display a message to the user.
                             Toast.makeText(LoginActivity.this, "Error Signing in", Toast.LENGTH_SHORT).show();
-                            //task.getException().printStackTrace();
                         }
                     }
                 });

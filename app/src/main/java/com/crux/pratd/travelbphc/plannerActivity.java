@@ -11,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,7 +22,11 @@ import android.widget.TextView;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -58,25 +63,26 @@ public class plannerActivity extends AppCompatActivity
         mt.setChecked(true);
         myCalendar = Calendar.getInstance();
 
+        Log.d("Token",FirebaseInstanceId.getInstance().getToken());
 
-        /*new GraphRequest(
-                AccessToken.getCurrentAccessToken(),
-                "/"+fbProfile.getId()+"/groups",
-                null,
-                HttpMethod.GET,
-                new GraphRequest.Callback() {
-                    @Override
-                    public void onCompleted(GraphResponse response) {
-                        // Insert your code here
-                        Log.d("fbGroup info",response+"");
-
-                    }
-                }).executeAsync();*/
-
-        /*TextView reqCount=(TextView) MenuItemCompat.getActionView(navigationView.getMenu().
-                findItem(R.id.nav_req));
-        reqCount.setGravity(Gravity.CENTER_VERTICAL);
-        reqCount.setText("1");*/
+        boolean flag = getSharedPreferences("MyPrefs",MODE_PRIVATE).getBoolean("token",false);
+        if(!flag) {
+            FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
+                @Override
+                public void onSuccess(InstanceIdResult instanceIdResult) {
+                    String newToken = instanceIdResult.getToken();
+                    Log.d("Token", newToken);
+                    FirebaseFirestore.getInstance().collection("Users").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).update("token",newToken)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d("Token", "Token updated");
+                            getSharedPreferences("MyPrefs",MODE_PRIVATE).edit().putBoolean("token",true).apply();
+                        }
+                    });
+                }
+            });
+        }
     }
 
     public void setupProfile() {

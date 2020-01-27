@@ -3,29 +3,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:alpha="0.4"
-    android:background="@drawable/bitshyd2"
     tools:context="com.crux.pratd.travelbphc.LoginActivity">
 
-    <RelativeLayout
-        android:id="@+id/loginContainer"
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="UTILITIES @ BPHC"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
+        android:textStyle="bold"
+        android:textSize="32sp"
+        android:fontFamily="serif-monospace"/>
+
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:src="@drawable/bitslogo"
+        android:layout_centerInParent="true"
+        android:scaleType="centerInside"
+        android:alpha="0.3"
+        android:padding="28dp"/>
 
-        <!-- Login progress -->
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="43dp"
-            app:srcCompat="@drawable/cab_icon" />
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/sign_in_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bottomText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp" />
 
-        <com.google.android.gms.common.SignInButton
-            android:id="@+id/sign_in_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true" />
-    </RelativeLayout>
+    <TextView
+        android:id="@+id/bottomText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="16dp"
+        android:text="Sign in using your BITS mail to proceed"/>
+
 </RelativeLayout>
