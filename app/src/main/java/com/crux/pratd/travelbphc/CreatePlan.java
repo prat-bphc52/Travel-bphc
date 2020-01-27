@@ -4,8 +4,6 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -16,6 +14,12 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.crux.pratd.travelbphc.activities.LoginActivity;
+import com.crux.pratd.travelbphc.activities.HomeActivity;
+import com.crux.pratd.travelbphc.model.TravelPlan;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -107,7 +111,7 @@ public class CreatePlan extends AppCompatActivity {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(getApplicationContext(), "Plan created successfully!", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(CreatePlan.this, plannerActivity.class);
+                        Intent intent = new Intent(CreatePlan.this, HomeActivity.class);
                         startActivity(intent);
                         finish();
                     }

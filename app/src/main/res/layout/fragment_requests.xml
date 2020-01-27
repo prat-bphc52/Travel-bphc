@@ -3,7 +3,7 @@
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.crux.pratd.travelbphc.Requests">
+    tools:context="com.crux.pratd.travelbphc.fragments.Requests">
     
     <LinearLayout 
         android:id="@+id/disp_req"

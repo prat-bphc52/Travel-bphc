@@ -1,12 +1,15 @@
-package com.crux.pratd.travelbphc;
+package com.crux.pratd.travelbphc.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.crux.pratd.travelbphc.fragments.PhoneVerification;
+import com.crux.pratd.travelbphc.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -34,10 +37,10 @@ import java.lang.ref.WeakReference;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
-    static WeakReference<FirebaseFirestore> db;
-    static FirebaseAuth firebaseAuth;
-    static GoogleSignInAccount account;
-    static FirebaseUser user;
+    public static WeakReference<FirebaseFirestore> db;
+    public static FirebaseAuth firebaseAuth;
+    public static GoogleSignInAccount account;
+    public static FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +72,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     e.printStackTrace();
                 }
             } else {
-                Intent intent = new Intent(LoginActivity.this, plannerActivity.class);
+                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -162,7 +165,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             Intent intent;
 
                             if(user.getPhoneNumber()==null) intent = new Intent(LoginActivity.this, PhoneVerification.class);
-                            else intent = new Intent(LoginActivity.this, plannerActivity.class);
+                            else intent = new Intent(LoginActivity.this, HomeActivity.class);
 
                             startActivity(intent);
                             finish();

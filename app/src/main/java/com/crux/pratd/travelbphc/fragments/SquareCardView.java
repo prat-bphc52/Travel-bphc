@@ -1,8 +1,9 @@
-package com.crux.pratd.travelbphc;
+package com.crux.pratd.travelbphc.fragments;
 
 import android.content.Context;
-import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
+
+import androidx.cardview.widget.CardView;
 
 public class SquareCardView extends CardView {
     public SquareCardView(Context context){

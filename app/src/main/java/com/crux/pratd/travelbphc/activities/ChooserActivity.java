@@ -1,9 +1,7 @@
-package com.crux.pratd.travelbphc;
+package com.crux.pratd.travelbphc.activities;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.ColorSpace;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +10,10 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.crux.pratd.travelbphc.R;
 
 import java.util.ArrayList;
 
@@ -56,7 +58,7 @@ public class ChooserActivity extends AppCompatActivity {
                     convertView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Intent intent = new Intent(ChooserActivity.this, plannerActivity.class);
+                            Intent intent = new Intent(ChooserActivity.this, HomeActivity.class);
                             startActivity(intent);
                         }
                     });

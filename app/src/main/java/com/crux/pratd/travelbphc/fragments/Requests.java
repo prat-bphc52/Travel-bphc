@@ -1,9 +1,7 @@
-package com.crux.pratd.travelbphc;
+package com.crux.pratd.travelbphc.fragments;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -13,6 +11,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
+import com.crux.pratd.travelbphc.ApiClient;
+import com.crux.pratd.travelbphc.ApiInterface;
+import com.crux.pratd.travelbphc.R;
+import com.crux.pratd.travelbphc.activities.LoginActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
@@ -26,7 +31,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.crux.pratd.travelbphc.LoginActivity.db;
+import static com.crux.pratd.travelbphc.activities.LoginActivity.db;
 
 public class Requests extends Fragment {
     DatabaseReference mRef;

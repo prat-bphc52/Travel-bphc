@@ -1,16 +1,17 @@
-package com.crux.pratd.travelbphc;
+package com.crux.pratd.travelbphc.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,10 +20,17 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+
+import com.crux.pratd.travelbphc.fragments.MyPlans;
+import com.crux.pratd.travelbphc.R;
+import com.crux.pratd.travelbphc.fragments.Requests;
+import com.crux.pratd.travelbphc.fragments.Search;
+import com.crux.pratd.travelbphc.model.Timeline;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -32,7 +40,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.Calendar;
 
-public class plannerActivity extends AppCompatActivity
+public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     Calendar myCalendar;
 
@@ -141,7 +149,7 @@ public class plannerActivity extends AppCompatActivity
             signInClient.signOut();
 
             //Show login screen
-            Intent intent = new Intent(plannerActivity.this, LoginActivity.class);
+            Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             finish();

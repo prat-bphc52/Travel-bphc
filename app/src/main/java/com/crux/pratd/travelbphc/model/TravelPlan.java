@@ -1,4 +1,4 @@
-package com.crux.pratd.travelbphc;
+package com.crux.pratd.travelbphc.model;
 
 import java.util.Map;
 

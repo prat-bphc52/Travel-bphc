@@ -1,11 +1,9 @@
-package com.crux.pratd.travelbphc;
+package com.crux.pratd.travelbphc.adapters;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,11 +13,20 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.crux.pratd.travelbphc.ApiClient;
+import com.crux.pratd.travelbphc.ApiInterface;
+import com.crux.pratd.travelbphc.R;
+import com.crux.pratd.travelbphc.model.TravelPlan;
+import com.crux.pratd.travelbphc.activities.LoginActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.JsonObject;
 
 import java.util.List;
@@ -29,18 +36,16 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.crux.pratd.travelbphc.LoginActivity.db;
-
 /**
  * Created by pratd on 20-01-2018.
  */
 
 public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.MyViewHolder> {
 
-    private List<TravelPlan> plans;
-    private Context context;
+    public List<TravelPlan> plans;
+    public Context context;
 
-    PlanAdapter(List<TravelPlan> travelPlans, Context context) {
+    public PlanAdapter(List<TravelPlan> travelPlans, Context context) {
         this.plans = travelPlans;
         this.context = context;
     }
@@ -62,7 +67,7 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.MyViewHolder> 
 
             View v = View.inflate(context, R.layout.display2, null);
             final TextView textView = v.findViewById(R.id.individual_name);
-            db.get()
+            FirebaseFirestore.getInstance()
                     .collection("Users")
                     .document(id)
                     .get()

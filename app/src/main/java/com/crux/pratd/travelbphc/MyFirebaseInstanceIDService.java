@@ -1,29 +1,27 @@
 package com.crux.pratd.travelbphc;
 
-import android.support.annotation.NonNull;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
+import com.crux.pratd.travelbphc.activities.LoginActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.FirebaseInstanceIdService;
+import com.google.firebase.messaging.FirebaseMessagingService;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
-    private String token;
+public class MyFirebaseInstanceIDService extends FirebaseMessagingService {
 
     @Override
-    public void onTokenRefresh() {
-        super.onTokenRefresh();
-        token = FirebaseInstanceId.getInstance().getToken();
-        Log.d("Service", "Refreshed token: " + token);
-        sendRegistrationToServer();
+    public void onNewToken(String token) { //Added onNewToken method
+        // Get updated InstanceID token.
+        sendRegistrationToServer(token);
     }
 
-    public void sendRegistrationToServer() {
+    public void sendRegistrationToServer(String token) {
         if (token == null)
             return;
         if (LoginActivity.user == null)
