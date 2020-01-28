@@ -2,17 +2,19 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     android:id="@+id/cardView"
     android:layout_width="match_parent"
-    android:layout_height="72dp"
+    android:layout_height="80dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@android:color/white">
+    android:background="@drawable/roundgrey"
+    android:elevation="12dp"
+    >
 
 
     <ImageView
         android:id="@+id/back_img"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         android:src="@drawable/train"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -22,14 +24,14 @@
         android:id="@+id/from_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="72dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="4dp"
         android:singleLine="false"
         android:text="Campus"
         android:textColor="@android:color/black"
         android:textSize="16sp"
         android:textStyle="normal"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/back_img"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
@@ -69,17 +71,38 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/from_text" />
 
+  <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      app:layout_constraintStart_toEndOf="@id/back_img"
+      app:layout_constraintTop_toBottomOf="@id/from_text"
+      app:layout_constraintBottom_toTopOf="@id/viewtravellers"
+      android:layout_marginStart="16dp"
+      android:text="Date : "
+      android:id="@+id/dateholder"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/from_text"
+        app:layout_constraintBottom_toTopOf="@id/viewtravellers"
+        app:layout_constraintEnd_toStartOf="@id/time"
+        android:layout_marginEnd="8dp"
+        android:text="Time :"
+
+        />
+
     <TextView
         android:id="@+id/date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="72dp"
+        android:layout_marginStart="8dp"
         android:text="13.01.2017"
         android:textStyle="bold"
         android:textColor="@android:color/black"
         android:textSize="14sp"
         app:layout_constraintBottom_toTopOf="@+id/viewtravellers"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/dateholder"
         app:layout_constraintTop_toBottomOf="@id/from_text" />
 
     <TextView
@@ -92,7 +115,8 @@
         android:textColor="@android:color/black"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/spaceleft" />
+        app:layout_constraintStart_toEndOf="@id/back_img"
+        android:layout_marginStart="16dp"/>
 
     <TextView
         android:id="@+id/spaceleft"
@@ -100,25 +124,27 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="4dp"
-        android:text="3"
+        android:text=" 3"
         android:textColor="#30fc03"
         android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintStart_toEndOf="@id/textView3" />
+
 
     <TextView
         android:id="@+id/viewtravellers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="72dp"
-        android:layout_marginBottom="4dp"
         android:text="View Travellers"
         android:textColor="@android:color/black"
         android:textSize="14sp"
+        android:background="@drawable/shape"
+        android:padding="3dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="12dp"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
