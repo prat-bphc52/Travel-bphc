@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -47,6 +48,7 @@ public class Search extends Fragment {
     TextView fil_date, fil_time, status;
     private PlanAdapter adapter;
     private int y, m, d, h, s;
+    private EditText buffertime;
     private List<TravelPlan> plan_list = new ArrayList<>();
     private List<TravelPlan> plan_list_filtered = new ArrayList<>();
     private RecyclerView recyclerView;
@@ -123,7 +125,10 @@ public class Search extends Fragment {
 
         fil_date = view.findViewById(R.id.date);
         fil_time = view.findViewById(R.id.time);
+        buffertime = view.findViewById(R.id.buffertime);
         status = view.findViewById(R.id.textView);
+        final String buffretime = buffertime.getText().toString();
+
         final DatePickerDialog.OnDateSetListener dplistener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
@@ -170,6 +175,8 @@ public class Search extends Fragment {
                 } else if (d == -1) {
                     Toast.makeText(getActivity(), "You haven't set the time", Toast.LENGTH_SHORT).show();
                     //y = m = d = h = s = -1;
+                } else if ( buffretime == null) {
+                    Toast.makeText(getActivity(), "You haven't set the buffer time", Toast.LENGTH_SHORT).show();
                 } else {
                     status.setText("SEARCH RESULTS");
                     applyFilter();
@@ -210,8 +217,9 @@ public class Search extends Fragment {
                 int d1 = Integer.parseInt(p.getDate().substring(0, p.getDate().indexOf('.')));
                 int h1 = Integer.parseInt(p.getTime().substring(0, 2));
                 int s1 = Integer.parseInt(p.getTime().substring(3, 5));
+                int b1 = Integer.parseInt(buffertime.getText().toString());
                 plan.set(y1, m1, d1, h1, s1);
-                if (Math.abs(filter.getTimeInMillis() - plan.getTimeInMillis()) < 3600000)
+                if (Math.abs(filter.getTimeInMillis() - plan.getTimeInMillis()) < b1*60*60*1000)
                     plan_list_filtered.add(p);
             }
         } else {
