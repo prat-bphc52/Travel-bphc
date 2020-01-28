@@ -99,10 +99,10 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.MyViewHolder> 
 
         if (plan.getSpace().equals("1") || plan.getSpace().equals("2") || plan.getSpace().equals("0")) {
             holder.space_left.setTextColor(Color.rgb(255, 0, 0));
-            holder.indicator.setBackgroundColor(Color.rgb(255, 0, 0));
+           // holder.indicator.setBackgroundColor(Color.rgb(255, 0, 0));
         } else {
             holder.space_left.setTextColor(Color.rgb(48, 252, 3));
-            holder.indicator.setBackgroundColor(Color.rgb(48, 252, 3));
+            //holder.indicator.setBackgroundColor(Color.rgb(48, 252, 3));
         }
         if (plan.getSource().equalsIgnoreCase("station") || plan.getDest().equalsIgnoreCase("station"))
             holder.background.setImageResource(R.drawable.train);
@@ -219,7 +219,7 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.MyViewHolder> 
             background = view.findViewById(R.id.back_img);
             space_left = view.findViewById(R.id.spaceleft);
             view_travellers = view.findViewById(R.id.viewtravellers);
-            indicator = view.findViewById(R.id.indicator);
+            //indicator = view.findViewById(R.id.indicator);
             card = view.findViewById(R.id.cardView);
         }
     }

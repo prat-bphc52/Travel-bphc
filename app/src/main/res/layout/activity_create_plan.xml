@@ -4,15 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.crux.pratd.travelbphc.CreatePlan">
+    tools:context="com.crux.pratd.travelbphc.CreatePlan"
+    >
 
     <Button
         android:id="@+id/button2"
         android:layout_width="0dp"
         android:layout_height="60dp"
-        android:layout_marginBottom="5dp"
+        android:background="@drawable/round"
+        android:layout_marginBottom="24dp"
         android:onClick="updateDatabase"
         android:text="Done!"
+        android:textColor="#ffffff"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

@@ -6,8 +6,9 @@
     android:layout_marginEnd="10dp"
     android:layout_marginStart="10dp"
     android:layout_marginTop="10dp"
-    android:background="?attr/colorButtonNormal"
-    android:orientation="vertical">
+    android:background="@drawable/roundgrey"
+    android:orientation="vertical"
+    android:elevation="12dp">
 
     <TextView
         android:id="@+id/req_message"
@@ -17,6 +18,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
         android:text="Loading..."
+        android:textColor="@color/pink"
         android:textAlignment="center"
         android:textSize="16sp" />
 
@@ -26,16 +28,22 @@
         android:layout_height="30dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:background="@color/colorAccent"
-        android:text="Accept" />
+        android:background="@drawable/round"
+        android:text="Accept"
+        android:textColor="#ffffff"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"/>
 
     <Button
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        android:textColor="#ffffff"
         android:id="@+id/reject"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:background="@color/colorAccent"
+        android:background="@drawable/round"
         android:text="Reject" />
 
 </RelativeLayout>

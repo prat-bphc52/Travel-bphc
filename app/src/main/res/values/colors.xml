@@ -4,4 +4,21 @@
     <!--<color name="colorPrimaryDark">#303f9f</color>-->
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#ff4081</color>
+    <color name="purple100">#4D7EFC</color>
+    <color name="purple200">#D2DFFE</color>
+    <color name="pink100">#17D3A5</color>
+    <color name="pink200">#FBD8D6</color>
+    <color name="grey100">#454555</color>
+    <color name="grey200">#EEEEEF</color>
+    <color name="lightpink100">#FFCF5C</color>
+    <color name="lightpink200">#FFF8EC</color>
+    <color name="pink">#D9718C</color>
+    <color name="darkpink">#A6587C</color>
+    <color name="purple">#623C73</color>
+    <color name="darkpurple">#392973</color>
+    <color name="purple1">#412971</color>
+    <color name="colorgrey300">#BDBDBD</color>
+    <color name="colorgrey50">#FAFAFA</color>
+    <color name="colorgrey100">#F5F5F5</color>
+    <color name="colorgrey200">#EEEEEE</color>
 </resources>
