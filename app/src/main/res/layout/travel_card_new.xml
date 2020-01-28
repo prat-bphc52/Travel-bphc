@@ -123,10 +123,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="8dp"
-        android:text=" 3"
+        android:layout_marginBottom="6dp"
+        android:text=" 3 "
         android:textColor="#30fc03"
-        android:textSize="14sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/textView3" />
