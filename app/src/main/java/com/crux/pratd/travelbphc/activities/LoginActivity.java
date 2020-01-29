@@ -1,6 +1,7 @@
 package com.crux.pratd.travelbphc.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -28,8 +29,13 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
+import com.google.firebase.firestore.SetOptions;
 
 import java.lang.ref.WeakReference;
+import java.util.HashMap;
+import java.util.Map;
+
+import retrofit2.http.Url;
 
 /**
  * Created by rutvora (www.github.com/rutvora)
@@ -156,6 +162,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 .setDisplayName(account.getDisplayName())
                 .setPhotoUri(account.getPhotoUrl())
                 .build();
+
+        Uri uri = LoginActivity.user.getPhotoUrl();
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("photos", uri.toString());
+        hashMap.put("Name", LoginActivity.user.getDisplayName());
+        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+        firebaseFirestore.collection("Users").document(LoginActivity.user.getUid()).set(hashMap, SetOptions.merge());
 
         user.updateProfile(profileUpdates)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {

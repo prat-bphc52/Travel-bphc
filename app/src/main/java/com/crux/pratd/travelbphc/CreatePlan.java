@@ -3,14 +3,12 @@ package com.crux.pratd.travelbphc;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -19,17 +17,17 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.crux.pratd.travelbphc.activities.LoginActivity;
 import com.crux.pratd.travelbphc.activities.HomeActivity;
+import com.crux.pratd.travelbphc.activities.LoginActivity;
 import com.crux.pratd.travelbphc.model.TravelPlan;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 public class CreatePlan extends AppCompatActivity {
 
@@ -101,18 +99,17 @@ public class CreatePlan extends AppCompatActivity {
             return;
         }
         final String id = LoginActivity.user.getUid();
-        final Uri uri = LoginActivity.user.getPhotoUrl();
+        //final Uri uri = LoginActivity.user.getPhotoUrl();
         Map<String, Object> abc = new HashMap<>();
         abc.put(id, true);
-        abc.put("uri", uri);
+        //abc.put("uri", uri);
         TravelPlan create = new TravelPlan(source.getText().toString(), destination.getText().toString(), fil_date.getText().toString(), fil_time.getText().toString(), id, spinner.getSelectedItem().toString(), abc, id);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("plans").document(FirebaseFirestore.getInstance().toString())
-                .set(create)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
+        db.collection("plans").add(create)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
-                    public void onSuccess(Void aVoid) {
+                    public void onSuccess(DocumentReference documentReference) {
                         Toast.makeText(getApplicationContext(), "Plan created successfully!", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(CreatePlan.this, HomeActivity.class);
                         startActivity(intent);

@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -78,12 +79,16 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.MyViewHolder> 
                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                             if (task.isSuccessful()) {
                                 textView.setText(task.getResult().getString("Name"));
+                                try {
+                                    Picasso.
+                                            with(context).
+                                            load(task.getResult().getString("photos")).into(profilepic);
+                                }
+                                catch (Exception e){
+                                }
                             }
                         }
                     });
-//            Picasso.with(context)
-//                    .load(LoginActivity.user.getPhotoUrl())
-//                    .into(profilepic);
             disp[i++] = v;
         }
         final LinearLayout container = new LinearLayout(holder.view_travellers.getContext());

@@ -1,6 +1,7 @@
 package com.crux.pratd.travelbphc.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -137,6 +138,7 @@ public class HomeActivity extends AppCompatActivity
         else if (id == R.id.log_out) {
             //Sign out of firebase
             FirebaseAuth.getInstance().signOut();
+            getSharedPreferences("MyPrefs",MODE_PRIVATE).edit().clear().apply();
 
             //Sign out of google account
             GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
