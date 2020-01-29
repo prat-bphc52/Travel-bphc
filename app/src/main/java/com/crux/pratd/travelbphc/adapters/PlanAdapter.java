@@ -28,6 +28,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.JsonObject;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 import java.util.Set;
@@ -67,6 +68,7 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.MyViewHolder> 
 
             View v = View.inflate(context, R.layout.display2, null);
             final TextView textView = v.findViewById(R.id.individual_name);
+            final ImageView profilepic = v.findViewById(R.id.profilepic);
             FirebaseFirestore.getInstance()
                     .collection("Users")
                     .document(id)
@@ -79,6 +81,9 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.MyViewHolder> 
                             }
                         }
                     });
+//            Picasso.with(context)
+//                    .load(LoginActivity.user.getPhotoUrl())
+//                    .into(profilepic);
             disp[i++] = v;
         }
         final LinearLayout container = new LinearLayout(holder.view_travellers.getContext());

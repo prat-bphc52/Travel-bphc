@@ -3,12 +3,14 @@ package com.crux.pratd.travelbphc;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -99,10 +101,10 @@ public class CreatePlan extends AppCompatActivity {
             return;
         }
         final String id = LoginActivity.user.getUid();
-
+        final Uri uri = LoginActivity.user.getPhotoUrl();
         Map<String, Object> abc = new HashMap<>();
         abc.put(id, true);
-
+        abc.put("uri", uri);
         TravelPlan create = new TravelPlan(source.getText().toString(), destination.getText().toString(), fil_date.getText().toString(), fil_time.getText().toString(), id, spinner.getSelectedItem().toString(), abc, id);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
