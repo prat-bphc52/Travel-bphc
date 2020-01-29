@@ -27,6 +27,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 public class CreatePlan extends AppCompatActivity {
 
@@ -102,10 +103,10 @@ public class CreatePlan extends AppCompatActivity {
         Map<String, Object> abc = new HashMap<>();
         abc.put(id, true);
 
-        TravelPlan create = new TravelPlan(source.getText().toString(), destination.getText().toString(), fil_date.getText().toString(), fil_time.getText().toString(), id, spinner.getSelectedItem().toString(), abc);
+        TravelPlan create = new TravelPlan(source.getText().toString(), destination.getText().toString(), fil_date.getText().toString(), fil_time.getText().toString(), id, spinner.getSelectedItem().toString(), abc, id);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("plans").document(id)
+        db.collection("plans").document(FirebaseFirestore.getInstance().toString())
                 .set(create)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

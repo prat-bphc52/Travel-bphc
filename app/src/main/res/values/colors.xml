@@ -21,4 +21,8 @@
     <color name="colorgrey50">#FAFAFA</color>
     <color name="colorgrey100">#F5F5F5</color>
     <color name="colorgrey200">#EEEEEE</color>
+    <color name="line_connector">#D3D2D3</color>
+    <color name="chalo">#2C175A</color>
+
+
 </resources>

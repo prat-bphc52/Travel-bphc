@@ -8,11 +8,11 @@ import java.util.Map;
 
 public class TravelPlan {
     private Map<String, Object> travellers;
-    private String source, dest, date, time, creator, space;
+    private String source, dest, date, time, creator, space, id;
 
     public TravelPlan(){ }
 
-    public TravelPlan(String source, String dest, String date, String time, String creator, String space, Map<String, Object> travellers) {
+    public TravelPlan(String source, String dest, String date, String time, String creator, String space, Map<String, Object> travellers, String id) {
         this.source = source;
         this.dest = dest;
         this.date = date;
@@ -20,6 +20,7 @@ public class TravelPlan {
         this.creator = creator;
         this.space = space;
         this.travellers = travellers;
+        this.id = id;
     }
 
     public String getSource() {
@@ -77,4 +78,15 @@ public class TravelPlan {
     public void setSpace(String space) {
         this.space = space;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+
+
 }

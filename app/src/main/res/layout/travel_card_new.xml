@@ -5,7 +5,7 @@
     android:layout_height="88dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/roundgrey"
+    android:background="#ffffff"
     android:layout_marginBottom="4dp"
     >
 
@@ -139,7 +139,6 @@
         android:text="View Travellers"
         android:textColor="@android:color/black"
         android:textSize="14sp"
-        android:background="@drawable/shape"
         android:padding="3dp"
         android:layout_marginBottom="8dp"
         android:textStyle="bold"
