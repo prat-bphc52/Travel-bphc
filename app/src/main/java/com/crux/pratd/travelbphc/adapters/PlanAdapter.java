@@ -109,10 +109,10 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.MyViewHolder> 
 
         if (plan.getSpace().equals("1") || plan.getSpace().equals("2") || plan.getSpace().equals("0")) {
             holder.space_left.setTextColor(Color.rgb(255, 0, 0));
-           // holder.indicator.setBackgroundColor(Color.rgb(255, 0, 0));
+            holder.indicator.setBackgroundColor(Color.rgb(255, 0, 0));
         } else {
             holder.space_left.setTextColor(Color.rgb(48, 252, 3));
-            //holder.indicator.setBackgroundColor(Color.rgb(48, 252, 3));
+            holder.indicator.setBackgroundColor(Color.rgb(48, 252, 3));
         }
         if (plan.getSource().equalsIgnoreCase("station") || plan.getDest().equalsIgnoreCase("station"))
             holder.background.setImageResource(R.drawable.train);

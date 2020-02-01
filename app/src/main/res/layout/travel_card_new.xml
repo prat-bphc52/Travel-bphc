@@ -9,12 +9,18 @@
     android:layout_marginBottom="4dp"
     >
 
+    <View
+        android:id="@+id/indicator"
+        android:layout_width="8dp"
+        android:layout_height="match_parent"
+        android:background="@android:color/holo_red_dark"
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <ImageView
         android:id="@+id/back_img"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="12dp"
         android:src="@drawable/train"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
