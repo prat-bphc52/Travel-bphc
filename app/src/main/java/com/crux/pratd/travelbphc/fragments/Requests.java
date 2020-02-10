@@ -93,6 +93,7 @@ public class Requests extends Fragment {
                                                 }
                                             });
                                 }
+                                final String planid = doc.get("plan_id").toString();
                                 child.findViewById(R.id.accept).setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
@@ -100,6 +101,7 @@ public class Requests extends Fragment {
                                         JsonObject json = new JsonObject();
                                         json.addProperty("sender", LoginActivity.user.getUid());
                                         json.addProperty("receiver", key);
+                                        json.addProperty("planid", planid);
                                         json.addProperty("status", true);
                                         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
                                         Call<JsonObject> call = apiInterface.acceptReq(json);
@@ -136,6 +138,7 @@ public class Requests extends Fragment {
                                         JsonObject json = new JsonObject();
                                         json.addProperty("sender", LoginActivity.user.getUid());
                                         json.addProperty("receiver", key);
+                                        json.addProperty("planid", planid);
                                         json.addProperty("status", false);
                                         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
                                         Call<JsonObject> call = apiInterface.acceptReq(json);

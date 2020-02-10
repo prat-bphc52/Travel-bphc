@@ -134,7 +134,7 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.MyViewHolder> 
                         public void onClick(DialogInterface dialogInterface, int i) {
                             JsonObject json = new JsonObject();
                             json.addProperty("sender", LoginActivity.user.getUid());
-                            json.addProperty("plan_id", plan.getCreator());
+                            json.addProperty("plan_id", plan.getId());
                             ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
                             Call<JsonObject> call = apiInterface.leavePlan(json);
                             call.enqueue(new Callback<JsonObject>() {
@@ -169,6 +169,7 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.MyViewHolder> 
                         public void onClick(DialogInterface dialogInterface, int i) {
                             JsonObject json = new JsonObject();
                             json.addProperty("sender", LoginActivity.user.getUid());
+                            json.addProperty("planid", plan.getId());
                             json.addProperty("receiver", creatorId);
                             ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
                             Call<JsonObject> call = apiInterface.sendReq(json);

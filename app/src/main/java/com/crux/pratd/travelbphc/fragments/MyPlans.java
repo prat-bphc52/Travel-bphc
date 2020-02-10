@@ -70,6 +70,7 @@ public class MyPlans extends Fragment {
                         if (task.getResult().getDocuments().size() != 0) {
                             for (DocumentSnapshot doc : task.getResult().getDocuments()) {
                                 TravelPlan p = doc.toObject(TravelPlan.class);
+                                p.setId(doc.getId());
                                 plan_list.add(p);
                             }
                             progress.setVisibility(View.GONE);
