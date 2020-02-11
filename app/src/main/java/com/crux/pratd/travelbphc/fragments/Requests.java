@@ -93,7 +93,7 @@ public class Requests extends Fragment {
                                                 }
                                             });
                                 }
-                                final String planid = doc.get("plan_id").toString();
+                                final String planid = doc.get("planid").toString();
                                 child.findViewById(R.id.accept).setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
